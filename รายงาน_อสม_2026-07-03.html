@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>รายงานผลงาน อสม.แกนนำสุขภาพ จ.อุบลราชธานี</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --green:#16a34a; --green-bg:#dcfce7;
+    --yellow:#ca8a04; --yellow-bg:#fef9c3;
+    --red:#dc2626; --red-bg:#fee2e2;
+    --blue:#2563eb; --blue-bg:#dbeafe;
+    --gray:#64748b; --border:#e2e8f0; --bg:#f8fafc;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Segoe UI','Sarabun',Tahoma,sans-serif;
+    background:var(--bg); margin:0; padding:24px; color:#1e293b;
+  }
+  .container{max-width:1200px;margin:0 auto;}
+  header{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:#fff; padding:24px 28px; border-radius:14px; margin-bottom:20px;
+  }
+  header h1{margin:0 0 6px 0; font-size:22px;}
+  header .meta{font-size:14px; opacity:.92; line-height:1.6;}
+  .kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:20px;}
+  .status-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px;}
+  .card{
+    background:#fff; border:1px solid var(--border); border-radius:12px;
+    padding:18px 20px; box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .card .label{font-size:13px; color:var(--gray); margin-bottom:6px;}
+  .card .value{font-size:28px; font-weight:700;}
+  .card .sub{font-size:12px; color:var(--gray); margin-top:4px;}
+  .val-green{color:var(--green);} .val-yellow{color:var(--yellow);} .val-red{color:var(--red);} .val-blue{color:var(--blue);}
+  .status-card{border-radius:12px; padding:16px 18px;}
+  .status-card.good{background:var(--green-bg); border:1px solid #bbf7d0;}
+  .status-card.warn{background:var(--yellow-bg); border:1px solid #fef08a;}
+  .status-card.bad{background:var(--red-bg); border:1px solid #fecaca;}
+  .status-card .count{font-size:26px; font-weight:700;}
+  .status-card .title{font-size:14px; font-weight:600; margin-bottom:4px;}
+  section.panel{
+    background:#fff; border:1px solid var(--border); border-radius:12px;
+    padding:20px; margin-bottom:20px;
+  }
+  section.panel h2{margin-top:0; font-size:16px;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th,td{padding:8px 10px; text-align:right; border-bottom:1px solid var(--border); white-space:nowrap;}
+  th{background:#f1f5f9; position:sticky; top:0; font-weight:600;}
+  td:first-child, th:first-child{text-align:left;}
+  tr.good{background:var(--green-bg);}
+  tr.warn{background:var(--yellow-bg);}
+  tr.bad{background:var(--red-bg);}
+  .table-wrap{overflow-x:auto; max-height:600px; overflow-y:auto;}
+  .summary-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .summary-box{background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:14px 16px;}
+  .summary-box h3{margin:0 0 8px 0; font-size:14px;}
+  .summary-box ol,ul{margin:6px 0 0 18px; padding:0; font-size:13px; line-height:1.8;}
+  .badge{display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:600;}
+  .badge.good{background:var(--green); color:#fff;}
+  .badge.warn{background:var(--yellow); color:#fff;}
+  .badge.bad{background:var(--red); color:#fff;}
+  footer{text-align:center; font-size:12px; color:var(--gray); padding:18px 0 6px;}
+  canvas{max-height:480px;}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>รายงานผลงาน อสม.แกนนำสุขภาพ จังหวัดอุบลราชธานี</h1>
+    <div class="meta">
+      เขตสุขภาพที่ 10 &nbsp;|&nbsp; จังหวัดอุบลราชธานี (25 อำเภอ)<br>
+      ข้อมูลอัพเดต ณ วันที่ 3 ก.ค. 2569 เวลา 01:02:04 น.
+    </div>
+  </header>
+
+  <div class="kpi-grid">
+    <div class="card">
+      <div class="label">อสม. ทั้งหมด</div>
+      <div class="value">34,234</div>
+      <div class="sub">คน (25 อำเภอ)</div>
+    </div>
+    <div class="card">
+      <div class="label">แกนนำสุขภาพมีศักยภาพ</div>
+      <div class="value val-blue">32,647</div>
+      <div class="sub">คน</div>
+    </div>
+    <div class="card">
+      <div class="label">ร้อยละรวมจังหวัด</div>
+      <div class="value val-green">95.36%</div>
+      <div class="sub">เป้าหมาย ≥ 90% — ผ่านเป้าหมาย</div>
+    </div>
+    <div class="card">
+      <div class="label">ค่าเฉลี่ยรายอำเภอ</div>
+      <div class="value val-green">96.20%</div>
+      <div class="sub">เฉลี่ยไม่ถ่วงน้ำหนัก 25 อำเภอ</div>
+    </div>
+  </div>
+
+  <div class="status-grid">
+    <div class="status-card good">
+      <div class="title">✅ ดีมาก (≥90%)</div>
+      <div class="count">21 อำเภอ</div>
+    </div>
+    <div class="status-card warn">
+      <div class="title">⚠️ ควรพัฒนา (80–89%)</div>
+      <div class="count">4 อำเภอ</div>
+    </div>
+    <div class="status-card bad">
+      <div class="title">🔴 ต้องเร่งรัด (&lt;80%)</div>
+      <div class="count">0 อำเภอ</div>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>ร้อยละแกนนำสุขภาพ รายอำเภอ (เรียงจากมากไปน้อย)</h2>
+    <canvas id="barChart"></canvas>
+  </section>
+
+  <section class="panel">
+    <h2>ตารางรายละเอียดรายอำเภอ</h2>
+    <div class="table-wrap">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>อำเภอ</th>
+            <th>A<br>อสม.ทั้งหมด</th>
+            <th>B<br>คัดกรอง NCDs</th>
+            <th>C<br>แนะนำพฤติกรรม</th>
+            <th>D<br>สร้าง อสค.</th>
+            <th>E<br>เยี่ยมบ้าน</th>
+            <th>F<br>รณรงค์ NCDs</th>
+            <th>G<br>แกนนำสุขภาพ</th>
+            <th>H<br>ร้อยละ</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>สรุปผล</h2>
+    <div class="summary-grid">
+      <div class="summary-box">
+        <h3>ภาพรวมจังหวัด</h3>
+        <div>ร้อยละรวม <strong>95.36%</strong> เทียบเป้าหมาย 90% → <span class="badge good">ผ่านเป้าหมาย (+5.36 จุด)</span></div>
+        <div style="margin-top:8px;">Top 3 อำเภอสูงสุด (100.00%):</div>
+        <ol>
+          <li>สำโรง — 100.00%</li>
+          <li>ดอนมดแดง — 100.00%</li>
+          <li>ทุ่งศรีอุดม — 100.00%</li>
+        </ol>
+      </div>
+      <div class="summary-box">
+        <h3>อำเภอที่ควรให้ความสนใจ (Bottom 3)</h3>
+        <ol>
+          <li>ตระการพืชผล — 82.10% <span class="badge warn">ควรพัฒนา</span></li>
+          <li>น้ำยืน — 86.76% <span class="badge warn">ควรพัฒนา</span></li>
+          <li>พิบูลมังสาหาร — 88.84% <span class="badge warn">ควรพัฒนา</span></li>
+        </ol>
+        <div style="margin-top:8px; font-size:13px; color:var(--gray);">
+          (รองลงมา: ม่วงสามสิบ 89.07% — ใกล้เกณฑ์ 90%)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    สร้างรายงาน: <span id="genTime"></span> น. &nbsp;|&nbsp; สร้างอัตโนมัติโดย Claude AI
+  </footer>
+</div>
+
+<script>
+const data = [
+  {name:"เมืองอุบลราชธานี", A:3787, B:3785, C:3783, D:3687, E:3551, F:3529, G:3782, H:99.87},
+  {name:"ศรีเมืองใหม่", A:1258, B:1243, C:1215, D:1202, E:1187, F:1164, G:1211, H:96.26},
+  {name:"โขงเจียม", A:679, B:677, C:660, D:655, E:658, F:665, G:659, H:97.05},
+  {name:"เขื่องใน", A:2313, B:2285, C:2179, D:2145, E:2112, F:2143, G:2160, H:93.39},
+  {name:"เขมราฐ", A:1425, B:1420, C:1402, D:1396, E:1389, F:1372, G:1402, H:98.39},
+  {name:"เดชอุดม", A:3368, B:3341, C:3312, D:3190, E:3021, F:3081, G:3299, H:97.95},
+  {name:"นาจะหลวย", A:1080, B:1069, C:1035, D:999, E:527, F:316, G:1017, H:94.17},
+  {name:"น้ำยืน", A:1276, B:1213, C:1122, D:1117, E:1100, F:1118, G:1107, H:86.76},
+  {name:"บุณฑริก", A:1671, B:1656, C:1619, D:1615, E:1623, F:1645, G:1618, H:96.83},
+  {name:"ตระการพืชผล", A:2140, B:2021, C:1788, D:1766, E:1679, F:1694, G:1757, H:82.10},
+  {name:"กุดข้าวปุ้น", A:777, B:774, C:756, D:751, E:724, F:724, G:752, H:96.78},
+  {name:"ม่วงสามสิบ", A:1701, B:1622, C:1523, D:1511, E:1468, F:1508, G:1515, H:89.07},
+  {name:"วารินชำราบ", A:2794, B:2781, C:2763, D:2617, E:2405, F:2334, G:2761, H:98.82},
+  {name:"พิบูลมังสาหาร", A:2490, B:2399, C:2231, D:2245, E:2198, F:2231, G:2212, H:88.84},
+  {name:"ตาลสุม", A:593, B:591, C:589, D:576, E:583, F:575, G:588, H:99.16},
+  {name:"โพธิ์ไทร", A:855, B:852, C:847, D:801, E:565, F:504, G:847, H:99.06},
+  {name:"สำโรง", A:1001, B:1001, C:1001, D:1000, E:1001, F:1001, G:1001, H:100.00},
+  {name:"ดอนมดแดง", A:481, B:481, C:481, D:471, E:448, F:421, G:481, H:100.00},
+  {name:"สิรินธร", A:949, B:940, C:926, D:877, E:909, F:921, G:922, H:97.15},
+  {name:"ทุ่งศรีอุดม", A:561, B:561, C:561, D:553, E:517, F:504, G:561, H:100.00},
+  {name:"นาเยีย", A:504, B:504, C:503, D:490, E:484, F:459, G:503, H:99.80},
+  {name:"นาตาล", A:744, B:742, C:739, D:739, E:739, F:740, G:739, H:99.33},
+  {name:"เหล่าเสือโก้ก", A:498, B:497, C:495, D:471, E:491, F:496, G:495, H:99.40},
+  {name:"สว่างวีระวงศ์", A:572, B:566, C:555, D:506, E:461, F:437, G:550, H:96.15},
+  {name:"น้ำขุ่น", A:717, B:715, C:709, D:533, E:651, F:560, G:708, H:98.74},
+];
+
+function level(h){
+  if(h>=90) return "good";
+  if(h>=80) return "warn";
+  return "bad";
+}
+function levelColor(h){
+  if(h>=90) return "#16a34a";
+  if(h>=80) return "#ca8a04";
+  return "#dc2626";
+}
+function levelLabel(h){
+  if(h>=90) return "ดีมาก";
+  if(h>=80) return "ควรพัฒนา";
+  return "ต้องเร่งรัด";
+}
+
+const sorted = [...data].sort((a,b)=>b.H-a.H);
+
+// Table
+const tbody = document.querySelector("#dataTable tbody");
+sorted.forEach(d=>{
+  const tr = document.createElement("tr");
+  tr.className = level(d.H);
+  tr.innerHTML = `<td>${d.name}</td><td>${d.A.toLocaleString()}</td><td>${d.B.toLocaleString()}</td>
+    <td>${d.C.toLocaleString()}</td><td>${d.D.toLocaleString()}</td><td>${d.E.toLocaleString()}</td>
+    <td>${d.F.toLocaleString()}</td><td>${d.G.toLocaleString()}</td><td><strong>${d.H.toFixed(2)}%</strong> <span class="badge ${level(d.H)}">${levelLabel(d.H)}</span></td>`;
+  tbody.appendChild(tr);
+});
+
+// Chart
+const ctx = document.getElementById('barChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: sorted.map(d=>d.name),
+    datasets: [{
+      label: 'ร้อยละแกนนำสุขภาพ',
+      data: sorted.map(d=>d.H),
+      backgroundColor: sorted.map(d=>levelColor(d.H)),
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (c)=> `${c.parsed.y.toFixed(2)}%`
+        }
+      }
+    },
+    scales: {
+      y: {
+        min: 70, max: 105,
+        ticks: { callback: v => v + '%' },
+        grid: { color: '#e2e8f0' }
+      },
+      x: {
+        ticks: { autoSkip:false, maxRotation:75, minRotation:75, font:{size:10} }
+      }
+    }
+  },
+  plugins: [{
+    id: 'targetLine',
+    afterDraw(chart){
+      const {ctx, chartArea:{left,right}, scales:{y}} = chart;
+      const yPos = y.getPixelForValue(90);
+      ctx.save();
+      ctx.strokeStyle = '#334155';
+      ctx.setLineDash([6,4]);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(left, yPos);
+      ctx.lineTo(right, yPos);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#334155';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText('เป้าหมาย 90%', left+6, yPos-6);
+      ctx.restore();
+    }
+  }]
+});
+
+document.getElementById('genTime').textContent = new Date().toLocaleString('th-TH', {dateStyle:'long', timeStyle:'medium'});
+</script>
+</body>
+</html>
